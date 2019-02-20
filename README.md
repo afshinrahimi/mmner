@@ -10,4 +10,5 @@ Proceedings of the 55th Annual Meeting of the Association
 for Computational Linguistics (Volume 1: Long Papers). Vol. 1. 2017.
 
 
-We have partitioned the original datasets into train/test/dev sets for benchmarking our multilingual transfer models.
+We have partitioned the original datasets into train/test/dev sets for benchmarking our multilingual transfer models:
+Rahimi, Afshin, Yuan Li, and Trevor Cohn. "Multilingual NER Transfer for Low-resource Languages." arXiv preprint arXiv:1902.00193 (2019).
