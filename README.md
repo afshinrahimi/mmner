@@ -2,6 +2,8 @@
 
 Multilingual NER transfer https://arxiv.org/abs/1902.00193
 
+The paper was accepted as a long paper in ACL2019. Code will be updated soon.
+
 You can download the datasets from from https://www.amazon.com/clouddrive/share/d3KGCRCIYwhKJF0H3eWA26hjg2ZCRhjpEQtDL70FSBN
 
 If you use datasets please cite:
