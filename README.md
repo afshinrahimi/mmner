@@ -16,7 +16,7 @@ We have partitioned the original datasets into train/test/dev sets for benchmark
 Rahimi, Afshin, Yuan Li, and Trevor Cohn. "Multilingual NER Transfer for Low-resource Languages." arXiv preprint arXiv:1902.00193 (2019).
 
 
-####download fastext wiki embeddings
+#### Download fastext wiki embeddings
 ```{r, engine='sh', code_block_name}
 mkdir ./monolingual
 
@@ -26,7 +26,7 @@ do
 done
 ```
 
-####create cross-lingual embeddings by mapping all languages into english space
+#### Create cross-lingual embeddings by mapping all languages into english space
 ```{r, engine='sh', code_block_name}
 git clone https://github.com/facebookresearch/MUSE.git
 cd MUSE
@@ -41,7 +41,7 @@ done
 #the cross-lingual embeddings will be save in MUSE/dumped
 ```
 
-#####Add langid the the beginning of each line, change filename, and compress files
+##### Add langid the the beginning of each line, change filename, and compress files
 ```{r, engine='sh', code_block_name}
 cd dumped
 for l in af am ar bg bn bs ca cs da de el en es et fa fi fr he hi hr hu id it lt lv mk ms nl no pl pt ro ru si sk sl so sq sv sw ta tl tr uk uz vi yo 
@@ -55,26 +55,26 @@ cd ../..
 ```
 
 
-#####Download panx_datasets 
+##### Download panx_datasets 
 from https://www.amazon.com/clouddrive/share/d3KGCRCIYwhKJF0H3eWA26hjg2ZCRhjpEQtDL70FSBN
 and save it in current directory so that you have ./panx_datasets/en.tar.gz. the panx_datasets address is hardcoded in utils.py.
 
 
 
-#####Create builtdata 
+##### Create builtdata 
 using cross-lingual word embeddings and NER datasets (this will create a term-, char- and tag-vocab for datasets, and limits wordembs to vocab in ner dataset). Set the parameters in the code (which languages to build data for, etc.)
 ```{r, engine='sh', code_block_name}
 python utils.py --embs_dir ./MUSE/dumped --ner_built_dir ./datasets/wiki/identchar
 ```
 
-#####Run single lowres models
+##### Run single lowres models
 ```{r, engine='sh', code_block_name}
 python main.py -m single -v 1 -s 0 -batch 1 -lr 0.01 -seed 1 -dir_input datasets/wiki/identchar/ -dir_output experiments/conll/wiki/identchar
 ```
 
 
 
-#####Run single highres model 
+##### Run single highres model 
 Note the indhigh should be 1 and batch size and learning rate are different from lowres settings.
 -s 1 saves the individual highres models in a directory, which will later be used for annotating data in other languages (langtaglang).
 ```{r, engine='sh', code_block_name}
@@ -84,14 +84,14 @@ CUDA_VISIBLE_DEVICES=0 nohup python main.py -m single -indhigh 1 -v 1 -s 1 -batc
 ```
 
 
-#####Use each highres model (previously saved) to annotate data in another model 
+##### Use each highres model (previously saved) to annotate data in another model 
 (requires hlangs llangs and batchsize=20 for conll datasets)
 ```{r, engine='sh', code_block_name}
 CUDA_VISIBLE_DEVICES=0 python main.py -m langtaglang -dir_input datasets/wiki/identchar/ -dir_output experiments/wiki/identchar
 ```
 
 
-#####Export wikian for bea (=uagg) model 
+##### Export wikian for bea (=uagg) model 
 Should be executed after langtaglang. this doesn't involve any defferential computation, and just changes the format of langtaglang data (it will be saved in dir_output/bccannotations)
 ```{r, engine='sh', code_block_name}
 python main.py  -m uaggexport -dir_input datasets/wiki/identchar/ -dir_output experiments/wiki/identchar
@@ -109,16 +109,16 @@ CUDA_VISIBLE_DEVICES=0 python main.py -m multiannotator -v 1 -unsuptopk 10 -unsu
 
 
 
-####CoNLL
+#### CoNLL
 Conll is fairly similar only lowercase all characters for German transfer.
 Also remove German for transfer to other languages.
 
-#####Run highres models
+##### Run highres models
 ```{r, engine='sh', code_block_name}
 CUDA_VISIBLE_DEVICES=5 nohup python main.py -m single -indhigh 1 -v 1 -s 1 -batch 20 -lr 0.001 -seed 1 -hlangs es en nl de -llangs es en nl de -dir_input datasets/conll/wiki/identchar/ -dir_output experiments/conll/wiki/identcharlower
 ```
 
-#####Direct transfer (langtaglang)
+##### Direct transfer (langtaglang)
 ```{r, engine='sh', code_block_name}
 #for german characters should be lowercased both in source and target (an extra if in config.py)
 CUDA_VISIBLE_DEVICES=0 python mmain.py -m langtaglang -dir_input datasets/wiki/identchar/ -dir_output experiments/wiki/identchar
