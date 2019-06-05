@@ -84,14 +84,14 @@ CUDA_VISIBLE_DEVICES=0 nohup python main.py -m single -indhigh 1 -v 1 -s 1 -batc
 ```
 
 
-##### Use each highres model (previously saved) to annotate data in another model 
+##### Use each highres model (previously saved) to annotate data in another language
 (requires hlangs llangs and batchsize=20 for conll datasets)
 ```{r, engine='sh', code_block_name}
 CUDA_VISIBLE_DEVICES=0 python main.py -m langtaglang -dir_input datasets/wiki/identchar/ -dir_output experiments/wiki/identchar
 ```
 
 
-##### Export wikian for bea (=uagg) model 
+##### Export the model predictions for the BEA (=uagg) model 
 Should be executed after langtaglang. this doesn't involve any defferential computation, and just changes the format of langtaglang data (it will be saved in dir_output/bccannotations)
 ```{r, engine='sh', code_block_name}
 python main.py  -m uaggexport -dir_input datasets/wiki/identchar/ -dir_output experiments/wiki/identchar
@@ -110,7 +110,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py -m multiannotator -v 1 -unsuptopk 10 -unsu
 
 
 #### CoNLL
-Conll is fairly similar only lowercase all characters for German transfer.
+CoNLL is fairly similar to wikian, only lowercase all characters for German transfer.
 Also remove German for transfer to other languages.
 
 ##### Run highres models
