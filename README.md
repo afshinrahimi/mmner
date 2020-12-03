@@ -6,6 +6,8 @@ The paper was accepted as a long paper in ACL2019.
 
 You can download the datasets from from https://www.amazon.com/clouddrive/share/d3KGCRCIYwhKJF0H3eWA26hjg2ZCRhjpEQtDL70FSBN
 
+If you want to automatically download the dataset using wget/curl use this link instead: https://www.dropbox.com/s/12h3qqog6q4bjve/panx_dataset.tar?dl=0
+
 If you use the datasets please cite:
 Pan, Xiaoman, et al. "Cross-lingual name tagging and linking for 282 languages." 
 Proceedings of the 55th Annual Meeting of the Association 
